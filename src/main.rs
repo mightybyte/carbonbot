@@ -121,7 +121,7 @@ pub async fn crawl(
         return;
     }
     let (tx, rx) = std::sync::mpsc::channel::<Message>();
-    let timeout_secs = get_message_gap(exchange, market_type, msg_type);
+    let timeout_secs = if symbols.is_some() { 3600 } else { get_message_gap(exchange, market_type, msg_type) };
     let writer_threads = create_writer_threads(rx, data_dir, redis_url, timeout_secs);
 
     if msg_type == MessageType::Candlestick {
