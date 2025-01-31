@@ -20,6 +20,8 @@ log = "0.4.17"
 env_logger = "0.10.0"
 tokio = { version = "1.25.0", features = ["rt-multi-thread", "macros"] }
 
+protobuf = { version = "=3.5.0" }
+
 [profile.release]
 lto = true
 strip = "debuginfo"
