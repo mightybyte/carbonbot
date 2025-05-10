@@ -1,5 +1,6 @@
 pub(super) mod file_writer;
 
+use chrono::{TimeZone, Utc};
 use crypto_crawler::*;
 use log::*;
 use redis::{self, Commands};
@@ -31,7 +32,11 @@ fn create_file_writer_thread(
 
         let start_time = Instant::now();
         while let Ok(msg) = rx.recv_timeout(timeout) {
-            let file_name = format!("{}.{}.{}", msg.exchange, msg.market_type, msg.msg_type);
+            let secs = msg.received_at / 1000;
+            let nsecs = ((msg.received_at % 1000) * 1_000_000) as u32;
+            let dt = Utc.timestamp_opt(secs as i64, nsecs).unwrap();
+
+            let file_name = format!("{}.{}.{}.{}", dt.format("%Y-%m"), msg.exchange, msg.market_type, msg.msg_type);
             if !writers.contains_key(&file_name) {
                 let data_dir = Path::new(&data_dir)
                     .join(msg.msg_type.to_string())

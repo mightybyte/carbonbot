@@ -7,6 +7,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+chrono = "0.4"
 #crypto-crawler = "4.7.8"
 crypto-crawler = { git = "https://github.com/mightybyte/crypto-crawler-rs.git", branch = "main", subdirectory = "crypto-crawler" }
 crypto-market-type = "1.1.5"
