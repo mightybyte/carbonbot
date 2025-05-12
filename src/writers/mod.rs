@@ -36,7 +36,7 @@ fn create_file_writer_thread(
             let nsecs = ((msg.received_at % 1000) * 1_000_000) as u32;
             let dt = Utc.timestamp_opt(secs as i64, nsecs).unwrap();
 
-            let file_name = format!("{}.{}.{}.{}", dt.format("%Y-%m"), msg.exchange, msg.market_type, msg.msg_type);
+            let file_name = format!("{}.{}.{}.{}", dt.format("%Y-%m-%d"), msg.exchange, msg.market_type, msg.msg_type);
             if !writers.contains_key(&file_name) {
                 let data_dir = Path::new(&data_dir)
                     .join(msg.msg_type.to_string())
